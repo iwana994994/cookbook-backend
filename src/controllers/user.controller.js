@@ -1,4 +1,4 @@
-import { clerkClient } from '@clerk/clerk-sdk-node';
+import { clerkClient } from '@clerk/express';
 import User from '../models/user.model.js';
 import { connectDB } from '../config/db.js';
 import { getAuth } from '@clerk/express';
