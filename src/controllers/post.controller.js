@@ -13,12 +13,12 @@ if (!user) return res.status(404).json({ error: "User not found" });
 
 // get content
 
-const {content} = req.body;
+const { content } = req.body; // izvlači samo string content iz objekta
+if (!content || !content.trim())
+  return res.status(400).json({ error: "Content is required" });
 
-if (!content) return res.status(400).json({ error: "Content is required" });
-
-// create post
 const post = await Post.create({ user: user._id, content });
+
 
 res.status(201).json({ post });
 
