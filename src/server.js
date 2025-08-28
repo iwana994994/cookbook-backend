@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import {connectDB} from './config/db.js';
 import userRoutes from './routes/user.route.js';
-
+import postRoutes from './routes/post.route.js';
 
 import { clerkMiddleware } from '@clerk/express'
 
@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/api/user",userRoutes)
+app.use("api/posts",postRoutes)
 
 
 

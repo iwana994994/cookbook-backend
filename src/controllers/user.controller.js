@@ -19,6 +19,7 @@ export const userSync = async (req, res) => {
     return res.status(200).json({ user: existingUser, message: "User already exists" });
   }
 const clerkUser = await clerkClient.users.getUser(userId);
+console.log('clerkUser   ', clerkUser);
 
 
            const userData = {
@@ -27,7 +28,8 @@ const clerkUser = await clerkClient.users.getUser(userId);
     firstName: clerkUser.firstName || "",
     lastName: clerkUser.lastName || "",
     username: clerkUser.emailAddresses[0].emailAddress.split("@")[0],
-    profilePicture: clerkUser.imageUrl || "",
+      imageUrl: clerkUser.imageUrl,   // 👈 sačuvaj URL slike
+
   };
 
   const user = await User.create(userData);
@@ -37,8 +39,6 @@ const clerkUser = await clerkClient.users.getUser(userId);
 
 export const getCurrentUser = async (req, res) => {
   
-console.log('user.controller loaded');
-console.log('getCurrentUser is', typeof getCurrentUser);
 
   await connectDB();
   const { userId } = getAuth(req);
