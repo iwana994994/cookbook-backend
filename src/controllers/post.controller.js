@@ -5,6 +5,7 @@ import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 export const createPost = async (req, res) => {
 
+await connectDB();
 
 const {userId} = getAuth(req);
 const user = await User.findOne({ clerkId: userId });
