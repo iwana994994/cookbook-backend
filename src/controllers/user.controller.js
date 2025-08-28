@@ -28,8 +28,7 @@ console.log('clerkUser   ', clerkUser);
     firstName: clerkUser.firstName || "",
     lastName: clerkUser.lastName || "",
     username: clerkUser.emailAddresses[0].emailAddress.split("@")[0],
-      imageUrl: clerkUser.imageUrl,   // 👈 sačuvaj URL slike
-
+      imageUrl: clerkUser.imageUrl||"",
   };
 
   const user = await User.create(userData);

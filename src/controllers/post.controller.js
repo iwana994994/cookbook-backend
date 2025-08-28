@@ -10,9 +10,14 @@ const {userId} = getAuth(req);
 const user = await User.findOne({ clerkId: userId });
 
 if (!user) return res.status(404).json({ error: "User not found" });
-const content= req.body;
+
+// get content
+
+const {content} = req.body;
 
 if (!content) return res.status(400).json({ error: "Content is required" });
+
+// create post
 const post = await Post.create({ user: user._id, content });
 
 res.status(201).json({ post });
