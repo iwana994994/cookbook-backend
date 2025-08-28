@@ -41,3 +41,11 @@ export const getPostById = async (req, res) => {
     if (!post) return res.status(404).json({ error: "Post not found" });
     res.status(200).json({ post });
 };
+
+export const deletePost = async (req, res) => {
+    await connectDB();
+    const { id } = req.params;
+    const post = await Post.findByIdAndDelete(id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    res.status(200).json({ message: "Post deleted successfully  🤞🤞🤞" });
+};
