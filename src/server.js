@@ -8,7 +8,10 @@ import postRoutes from './routes/post.route.js';
 import { clerkMiddleware } from '@clerk/express'
 import { createServer } from 'http';
 import { initializeSocket } from './config/socket.js';
+import path from "path";
 
+
+const __dirname=path.resolve();
 dotenv.config();
 const app = express();
 
@@ -32,17 +35,29 @@ app.use("/api/posts",postRoutes)
 
 
 
+// SERVER RENDER.COM
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-
-if (process.env.NODE_ENV !== 'production') {
-  connectDB().then(() => {
-
-    httpServer.listen(process.env.PORT, () => {
-      console.log('❤  Server SOCKET!!! is running on port ' + process.env.PORT );
-    })
-    app.listen(process.env.PORT, () => {
-      console.log('❤  Server is running on port ' + process.env.PORT );
-    });
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'));
   });
 }
-export default app;
+app.listen(process.env.PORT, () => {
+  console.log('❤  Server is running on port ' + process.env.PORT );
+  connectDB();
+});
+
+//SERVER VERCEL
+// if (process.env.NODE_ENV !== 'production') {
+//   connectDB().then(() => {
+
+//     httpServer.listen(process.env.PORT, () => {
+//       console.log('❤  Server SOCKET!!! is running on port ' + process.env.PORT );
+//     })
+//     app.listen(process.env.PORT, () => {
+//       console.log('❤  Server is running on port ' + process.env.PORT );
+//     });
+//   });
+// }
+// export default app;
