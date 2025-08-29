@@ -29,6 +29,7 @@ console.log('clerkUser   ', clerkUser);
     lastName: clerkUser.lastName || "",
     username: clerkUser.emailAddresses[0].emailAddress.split("@")[0],
       imageUrl: clerkUser.imageUrl||"",
+      bannerUrl:clerkUser.imageUrl||"",
   };
 
   const user = await User.create(userData);
