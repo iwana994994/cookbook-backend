@@ -4,8 +4,8 @@ export const initializeSocket = (server) => {
     const io = new Server(server,
         {
             cors: {
-                origin: "https://cookbook-backend-alpha.vercel.app",
-                credentials: true
+                origin: "https://cookbook-backend-alpha.vercel.app"
+                
             },
         }
     );
