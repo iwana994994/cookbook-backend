@@ -38,6 +38,7 @@ app.use("/api/posts",postRoutes)
 // SERVER RENDER.COM
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../mobile-frontend/dist')));
+  
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../mobile-frontend/dist/index.html'));
@@ -46,6 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(process.env.PORT, () => {
   console.log('❤  Server is running on port ' + process.env.PORT );
   connectDB();
+  console.log("Connected to MongoDB ❤❤❤");
 });
 
 //SERVER VERCEL
