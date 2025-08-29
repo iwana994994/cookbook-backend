@@ -18,8 +18,9 @@ export const initializeSocket = (server) => {
            userSocketMap.set(userId, socket.id);
         userActivityMap.set(userId, "idle");
         console.log(`User ${userId} connected 😍😍😍`);
+         io.emit("users_connected", userId);
        })
-      io.emit("users_connected", userId);
+     
       socket.emit( "users_online", Array.from(userSocketMap.keys()));
       io.emit("activity", Array.from(userActivityMap.entries()));  
 
