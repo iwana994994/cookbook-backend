@@ -16,15 +16,24 @@ export const initializeSocket = (server) => {
     const userActivityMap = new Map();
 
 // check if token is valid SOCKET.IO IS REQUIRING TOKEN ALWAYS!!!
-    io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  if (isValidToken(token)) {
-    next();
-    console.log("Token is valid 😍😍😍");
-  } else {
-    next(new Error("Unauthorized   😒😒😒"));
-  }
-}); 
+ // ✅ Clerk token validation
+  io.use(async (socket, next) => {
+    try {
+      const token = socket.handshake.auth?.token;
+      if (!token) return next(new Error("No token provided"));
+
+      const { payload } = await verifyToken(token, {
+        secretKey: process.env.CLERK_JWT_KEY, // vidi u Clerk dashboardu
+      });
+
+      socket.user = payload.sub; // user id iz Clorka
+      console.log("Token valid 😍 for user:", socket.user);
+      next();
+    } catch (err) {
+      console.error("Token validation failed", err);
+      next(new Error("Unauthorized 😒"));
+    }
+  });
 
 
 
