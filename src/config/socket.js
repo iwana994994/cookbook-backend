@@ -24,9 +24,10 @@ export const initializeSocket = (server) => {
       if (!token) return next(new Error("No token provided"));
 
       const { payload } = await verifyToken(token, {
+    
         secretKey: process.env.CLERK_JWT_KEY, // vidi u Clerk dashboardu
       });
-
+      console.log("Token payload:   🥰  ", payload);
       socket.user = payload.sub; // user id iz Clorka
       console.log("Token valid 😍 for user:", socket.user);
       next();
