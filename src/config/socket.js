@@ -1,4 +1,5 @@
 import {Server} from "socket.io";
+import { verifyToken } from "@clerk/clerk-sdk-node";
 
 export const initializeSocket = (server) => {
     const io = new Server(server,
