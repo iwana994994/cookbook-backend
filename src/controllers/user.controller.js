@@ -50,32 +50,27 @@ console.log("Body received:", req.body);
 };
 
 export const getCurrentUser = async (req, res) => {
-  await connectDB();
+   await connectDB();
 
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: "No token provided" });
+    if (!authHeader)
+      return res.status(401).json({ error: "No token provided  🤳 " });
 
+    const token = authHeader.split(" ")[1]; // "Bearer <token>"
 
-console.log("CLERK_JWT_KEY env var:", process.env.CLERK_JWT_KEY ? "set" : "NOT set");
-
-
-console.log("CLERK_JWT_KEY value:    🤳  ", process.env.CLERK_JWT_KEY);
-
-
-    const token = authHeader.split(" ")[1];
     const { payload } = await verifyToken(token, {
-      secretKey: process.env.CLERK_JWT_KEY,
+      secretKey: process.env.CLERK_JWT_KEY, // JWT key iz Native API sekcije
     });
 
     const userId = payload.sub;
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) return res.status(404).json({ error: "User not found   😒" });
 
     res.status(200).json({ user });
   } catch (err) {
-    console.error("Error verifying token:", err);
-    res.status(401).json({ error: "Unauthorized" });
+    console.error("Error verifying token: 😒  ", err);
+    res.status(401).json({ error: "Unauthorized   😪" });
   }
 };
