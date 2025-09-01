@@ -15,6 +15,16 @@ export const initializeSocket = (server) => {
     const userSocketMap = new Map();
     const userActivityMap = new Map();
 
+
+    io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (isValidToken(token)) {
+    next();
+    console.log("Token is valid 😍😍😍");
+  } else {
+    next(new Error("Unauthorized   😒😒😒"));
+  }
+}); 
     // user are connected
     io.on("connection", (socket) => {
        socket.on("user_connected", (userId) => {
