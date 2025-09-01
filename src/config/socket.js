@@ -55,6 +55,13 @@ export const initializeSocket = (server) => {
             console.log(`User ${disconnectedUserId} disconnected 👀`);
         }    
         });
+        socket.on("connect_error", (err) => {
+  console.error("Socket connect_error:  ⚔  ", err);
+});
+socket.on("error", (err) => {
+  console.error("Socket error:  ⚔⚔⚔ ", err);
+});
+
 
     }) 
 }
