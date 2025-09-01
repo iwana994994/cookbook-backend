@@ -16,7 +16,6 @@ export const initializeSocket = (server) => {
     const userSocketMap = new Map();
     const userActivityMap = new Map();
 
-// check if token is valid SOCKET.IO IS REQUIRING TOKEN ALWAYS!!!
  // ✅ Clerk token validation
   io.use(async (socket, next) => {
     try {
@@ -28,7 +27,7 @@ export const initializeSocket = (server) => {
         secretKey: process.env.CLERK_JWT_KEY, // vidi u Clerk dashboardu
       });
       console.log("Token payload:   🥰  ", payload);
-      
+
       socket.user = payload.sub; // user id iz Clorka
       console.log("Token valid 😍 for user:", socket.user);
       next();
