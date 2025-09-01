@@ -56,10 +56,10 @@ export const initializeSocket = (server) => {
         }    
         });
         socket.on("connect_error", (err) => {
-  console.error("Socket connect_error:  ⚔  ", err);
+  console.error("Socket connect_error:    ", err);
 });
 socket.on("error", (err) => {
-  console.error("Socket error:  ⚔⚔⚔ ", err);
+  console.error("Socket error:", err);
 });
 
 
