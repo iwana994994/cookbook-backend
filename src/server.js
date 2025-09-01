@@ -40,15 +40,15 @@ app.use("/api/posts",postRoutes)
 
 
 // SERVER RENDER.COM
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'https://mobile-frontend-beryl.vercel.app')));
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'https://mobile-frontend-beryl.vercel.app')));
   
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../https://mobile-frontend-beryl.vercel.app'));
-  });
-}
-app.listen(process.env.PORT, () => {
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, '../https://mobile-frontend-beryl.vercel.app'));
+//   });
+// }
+httpServer.listen(process.env.PORT, () => {
   console.log('❤  Server is running on port ' + process.env.PORT );
   connectDB();
   console.log("Connected to MongoDB ❤❤❤");

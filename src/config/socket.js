@@ -4,10 +4,12 @@ export const initializeSocket = (server) => {
     const io = new Server(server,
         {
             cors: {
-                origin: "https://mobile-frontend-a0b0qdfsz-iwana994994s-projects.vercel.app",
-                   transports: ["websocket", "polling"],
+                origin: "https://mobile-frontend-beryl.vercel.app",
+                      methods: ["GET", "POST"],
+                       credentials: true, 
                 
             },
+            transports: ["websocket", "polling"],
         }
     );
     const userSocketMap = new Map();
