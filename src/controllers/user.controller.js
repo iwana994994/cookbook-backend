@@ -4,6 +4,10 @@ import { connectDB } from '../config/db.js';
 import { verifyToken } from '@clerk/clerk-sdk-node';
 
 export const userSync = async (req, res) => {
+
+  console.log("Headers received:", req.headers);
+console.log("Body received:", req.body);
+
   await connectDB();
 
   try {
