@@ -38,13 +38,26 @@ console.log('clerkUser   ', clerkUser);
 }
 
 export const getCurrentUser = async (req, res) => {
-  
-
   await connectDB();
-  const { userId } = getAuth(req);
-  const user = await User.findOne({ clerkId: userId });
 
-  if (!user) return res.status(404).json({ error: "User not found" });
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ error: "No token provided" });
 
-  res.status(200).json({ user });
+    const token = authHeader.split(" ")[1]; // očekuje "Bearer <token>"
+
+    const { payload } = await verifyToken(token, {
+      secretKey: process.env.CLERK_JWT_KEY, // live JWT key
+    });
+
+    const userId = payload.sub; // user ID iz tokena
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error("Error verifying token:", err);
+    res.status(401).json({ error: "Unauthorized" });
+  }
 };
