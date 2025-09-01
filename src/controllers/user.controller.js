@@ -55,7 +55,14 @@ export const getCurrentUser = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ error: "No token provided" });
+
+
 console.log("CLERK_JWT_KEY env var:", process.env.CLERK_JWT_KEY ? "set" : "NOT set");
+
+
+console.log("CLERK_JWT_KEY value:    🤳  ", process.env.CLERK_JWT_KEY);
+
+
     const token = authHeader.split(" ")[1];
     const { payload } = await verifyToken(token, {
       secretKey: process.env.CLERK_JWT_KEY,
