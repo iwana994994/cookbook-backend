@@ -11,7 +11,7 @@ import { initializeSocket } from './config/socket.js';
 import path from "path";
 
 
-const __dirname=path.resolve();
+// const __dirname=path.resolve();
 dotenv.config();
 const app = express();
 

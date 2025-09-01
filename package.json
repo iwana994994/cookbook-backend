@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@clerk/backend": "^2.10.1",
     "@clerk/clerk-sdk-node": "^4.13.23",
     "@clerk/express": "^1.7.24",
     "cors": "^2.8.5",
