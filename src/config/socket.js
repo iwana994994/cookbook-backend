@@ -15,7 +15,7 @@ export const initializeSocket = (server) => {
     const userSocketMap = new Map();
     const userActivityMap = new Map();
 
-
+// check if token is valid SOCKET.IO IS REQUIRING TOKEN ALWAYS!!!
     io.use((socket, next) => {
   const token = socket.handshake.auth.token;
   if (isValidToken(token)) {
@@ -25,6 +25,9 @@ export const initializeSocket = (server) => {
     next(new Error("Unauthorized   😒😒😒"));
   }
 }); 
+
+
+
     // user are connected
     io.on("connection", (socket) => {
        socket.on("user_connected", (userId) => {
@@ -56,10 +59,10 @@ export const initializeSocket = (server) => {
         }    
         });
         socket.on("connect_error", (err) => {
-  console.error("Socket connect_error:    ", err);
+  console.error("Socket connect_error:  ⚔  ", err);
 });
 socket.on("error", (err) => {
-  console.error("Socket error:", err);
+  console.error("Socket error:  ⚔⚔⚔ ", err);
 });
 
 
