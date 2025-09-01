@@ -1,5 +1,4 @@
 import {Server} from "socket.io";
-import { verifyToken } from "@clerk/backend";  // Clerk helper
 
 export const initializeSocket = (server) => {
     const io = new Server(server,
@@ -16,37 +15,22 @@ export const initializeSocket = (server) => {
     const userSocketMap = new Map();
     const userActivityMap = new Map();
 
-  // ✅ Clerk token validation
-  io.use(async (socket, next) => {
-    try {
-      const token = socket.handshake.auth?.token;
-      if (!token) return next(new Error("No token provided"));
 
-      const { payload } = await verifyToken(token, {
-        secretKey: process.env.CLERK_JWT_KEY, // vidi u Clerk dashboardu
-      });
-
-      socket.user = payload.sub; // user id iz Clorka
-      console.log("Token valid 😍 for user:", socket.user);
-      next();
-    } catch (err) {
-      console.error("Token validation failed", err);
-      next(new Error("Unauthorized 😒"));
-    }
-  });
-
-
+    io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (isValidToken(token)) {
+    next();
+    console.log("Token is valid 😍😍😍");
+  } else {
+    next(new Error("Unauthorized   😒😒😒"));
+  }
+}); 
     // user are connected
     io.on("connection", (socket) => {
-      console.log(`✅ User connected with ID: ${socket.user}`);
-
        socket.on("user_connected", (userId) => {
            userSocketMap.set(userId, socket.id);
         userActivityMap.set(userId, "idle");
         console.log(`User ${userId} connected 😍😍😍`);
-
-        
-        
          io.emit("users_connected", userId);
        })
      
@@ -81,4 +65,3 @@ socket.on("error", (err) => {
 
     }) 
 }
-export default socket
