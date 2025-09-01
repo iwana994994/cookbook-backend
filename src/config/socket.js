@@ -28,6 +28,7 @@ export const initializeSocket = (server) => {
         secretKey: process.env.CLERK_JWT_KEY, // vidi u Clerk dashboardu
       });
       console.log("Token payload:   🥰  ", payload);
+      
       socket.user = payload.sub; // user id iz Clorka
       console.log("Token valid 😍 for user:", socket.user);
       next();
